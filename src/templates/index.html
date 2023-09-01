@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- Formulario para agregar elementos al inventario -->
+    <!-- Método POST para enviar y cargar en la DB -->
+    <form action="/add_insumo", method="POST"> 
+        <input type="text" name="insumo" placeholder="Insumo">
+        <input type="text" name="registro" placeholder="Registro">
+        <input type="text" name="ubicacion" placeholder="Ubicación">
+        <input type="text" name="estado" placeholder="Estado">
+        <input type="text" name="precio_unitario" placeholder="Precio Unitario">
+        <input type="text" name="fecha_de_ingreso" placeholder="Fecha de Ingreso">
+        <input type="text" name="fecha_de_actualizacion" placeholder="Fecha de actualización">
+        <input type="text" name="observacion" placeholder="Observación">
+
+        <!-- Botón para guardar -->
+        <button type="submit">
+            Guardar
+        </button>
+    </form>
+</body>
+</html>
