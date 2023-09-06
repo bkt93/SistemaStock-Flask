@@ -20,6 +20,12 @@ mysql= MySQL(app)
 def Index():
     return render_template('index.html')
 
+    
+# Ruta para renderizar el template para añadir nuevos elementos
+@app.route("/create")
+def create():
+    return render_template("create.html")
+
 # Ruta para añadir elementos
 @app.route('/add_insumo', methods=['POST'])
 def add_insumo():
@@ -41,7 +47,7 @@ def add_insumo():
 # Ruta para editar elementos
 @app.route('/edit_insumo')
 def edit_insumo():
-    return "Elemento editado"
+    return render_template('edit.html')
 
 # Ruta para eliminar elementos
 @app.route('/delete_insumo')
