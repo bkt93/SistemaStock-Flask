@@ -1,12 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-    <title>Document</title>
-</head>
-<body>
+{% include 'header.html' %}
+    
+    <a href="{{url_for('create')}}" class="btn btn-success">Añadir Insumo</a>
+    <br>
     <div class="table-responsive">
         <table class="table table-striped">
             <thead class="table-dark">
@@ -41,5 +36,5 @@
             </tbody>
         </table>
     </div>
-</body>
-</html>
+
+    {% include 'footer.html' %}
