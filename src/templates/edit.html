@@ -1,11 +1,30 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <p>Editar</p>
-</body>
-</html>
+Formulario para Editar
+
+{% for item in inv %}
+
+    <form method="POST" action="/update/{{item[0]}}" enctype="multipart/form-data">
+
+        <input type="text" value="{{item[1]}}" name="insumos" placeholder="Insumo">
+        <br>
+        <input type="text" value="{{item[2]}}" name="registro" placeholder="Registro">
+        <br>
+        <input type="text" value="{{item[3]}}" name="ubicacion" placeholder="Ubicación">
+        <br>
+        <input type="text" value="{{item[4]}}" name="estado" placeholder="Estado">
+        <br>
+        <input type="text" value="{{item[5]}}" name="precio_unitario" placeholder="Precio Unitario">
+        <br>
+        <input type="text" value="{{item[6]}}" name="fecha_de_ingreso" placeholder="Fecha de Ingreso">
+        <br>
+        <input type="text" value="{{item[7]}}" name="fecha_de_actualizacion" placeholder="Fecha de actualización">
+        <br>
+        <input type="text" value="{{item[8]}}" name="observacion" placeholder="Observación">
+        <br>
+
+        <!-- Botón para guardar -->
+        <button type="submit">
+            Guardar
+        </button>
+    </form>
+    
+{% endfor %}
