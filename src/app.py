@@ -3,8 +3,8 @@ from flask_mysqldb import MySQL
 
 app = Flask(__name__)
 
-# Conexión a la base de datos MySQL
 
+# Conexión a la base de datos MySQL
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_PORT'] = 3306
 app.config['MYSQL_USER'] = 'root'
@@ -63,6 +63,7 @@ def edit_insumo(id):
     return render_template('edit.html', inv = inventario_items)
 
 
+# Consulta UPDATE para actualizar elementos de la DB
 @app.route('/update/<id>', methods = ['POST'])
 def update(id):
     if request.method == 'POST':
