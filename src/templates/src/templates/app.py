@@ -3,8 +3,8 @@ from flask_mysqldb import MySQL
 
 app = Flask(__name__)
 
-# Conexión a la base de datos MySQL
 
+# Conexión a la base de datos MySQL
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_PORT'] = 3306
 app.config['MYSQL_USER'] = 'root'
@@ -63,6 +63,7 @@ def edit_insumo(id):
     return render_template('edit.html', inv = inventario_items)
 
 
+# Consulta UPDATE para actualizar elementos de la DB
 @app.route('/update/<id>', methods = ['POST'])
 def update(id):
     if request.method == 'POST':
@@ -94,25 +95,6 @@ def delete_insumo(id):
     cur.execute('DELETE FROM inventario WHERE id = %s', (id,))
     mysql.connection.commit()        
     return redirect('/')
-
-# Ruta de busqueda de elementos
-@app.route('/buscar', methods=['GET', 'POST'])
-def buscar():
-    mensaje = None
-    
-    if request.method == 'POST':
-        nombre = request.form['nombre'] # deberia poner cada uno?? no sobreescribe lo que ya habia hecho respecto a la forma de busqueda? 
-                                        #FALTA EL HTML
-        cur = mysql.connection.cursor()
-        cur.execute("SELECT * FROM inventario WHERE insumos = %", (nombre,))
-        inventario_item = cur.fetchone()
-
-        if inventario_item:
-            return redirect(url_for('mostrar_detalle', id=inventario_item[0]))
-        else:
-            mensaje = "Vacío: El valor no existe en la base de datos."
-
-    return redirect('/', mensaje=mensaje)
 
 if __name__ == '__main__':
     app.run(debug=True, port=8000)

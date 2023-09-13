@@ -1,0 +1,40 @@
+.center-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.tittle-inv {
+    display: flex;
+    align-items: center;
+}
+
+.add-insumo {
+    margin-left: -35%; 
+}
+
+.search-container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+
+.search-box {
+    display: inline-block; 
+    border: 1px solid #ccc;
+    border-radius: 20px; 
+    padding: 5px 10px;
+}
+
+#search-input {
+    border: none; 
+    outline: none; 
+    width: 150px;
+    margin-right: 10px; 
+}
+
+
+
