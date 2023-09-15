@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_mysqldb import MySQL
 
 app = Flask(__name__)
@@ -8,10 +8,13 @@ app = Flask(__name__)
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_PORT'] = 3306
 app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = 'invmysql'
+app.config['MYSQL_PASSWORD'] = '129899'
 app.config['MYSQL_DB'] = 'inventarioflask'
 
 mysql= MySQL(app)
+
+#Configuraciones
+app.secret_key = 'mysecretkey'
 
 
 
@@ -50,6 +53,7 @@ def add_insumo():
         cur = mysql.connection.cursor()
         cur.execute('INSERT INTO inventario (insumos, registro, ubicacion, estado, precio_unitario, fecha_de_ingreso, fecha_de_actualizacion, observacion) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)', (insumos, registro, ubicacion, estado, precio_unitario, fecha_de_ingreso, fecha_de_actualizacion, observacion))
         mysql.connection.commit()
+        flash('Insumo ingresado')
         return redirect('/')
 
 # Ruta para recuperar la información disponible en la DB para poder editar un elemento
@@ -60,6 +64,8 @@ def edit_insumo(id):
     cur.execute('SELECT * FROM inventario WHERE id = %s', (id,))
     inventario_items = cur.fetchall()
     mysql.connection.commit()
+    
+   
     return render_template('edit.html', inv = inventario_items)
 
 
@@ -84,6 +90,7 @@ def update(id):
                     """, (insumos, registro, ubicacion, estado, precio_unitario, fecha_de_ingreso,
                         fecha_de_actualizacion, observacion, id))
         mysql.connection.commit()
+        flash('Hecho!')
         return redirect('/')
 
 # Ruta para eliminar elementos
@@ -92,8 +99,11 @@ def delete_insumo(id):
       
     cur = mysql.connection.cursor()
     cur.execute('DELETE FROM inventario WHERE id = %s', (id,))
-    mysql.connection.commit()        
+    mysql.connection.commit()       
+    flash('Elemento eliminado!') 
     return redirect('/')
+
+
 
 # Ruta de busqueda de elementos
 @app.route('/buscar', methods=['GET', 'POST'])
