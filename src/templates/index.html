@@ -1,15 +1,6 @@
 {% include 'header.html' %}
     
-<script type="text/javascript">
-    function ConfirmDelete() {
-        var respuesta = confirm("Deseas eliminar este elemento?");
-        if (respuesta == true) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-</script>
+
 
     
 
@@ -25,10 +16,11 @@
             <div class="search-box">
                 <input type="text" id="search-input" placeholder="Buscar">
                 <i class="fas fa-search"></i>
+               
             </div>
         </div>
-    </div>
 
+    </div>
     
     <!-- Contenedores para la tabla -->
     <div class="table-responsive">
@@ -72,6 +64,19 @@
     </div>
 </div>
     {% include 'footer.html' %}
+
+
+<script type="text/javascript">
+    function ConfirmDelete() {
+        var respuesta = confirm("Deseas eliminar este elemento?");
+        if (respuesta == true) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+</script>
+    
 
 
 

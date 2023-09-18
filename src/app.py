@@ -17,7 +17,6 @@ mysql= MySQL(app)
 app.secret_key = 'mysecretkey'
 
 
-
 # Ruta principal
 @app.route('/')
 def Index():
@@ -31,7 +30,7 @@ def Index():
 
     return render_template('index.html', inv = inventario_items)
 
-    
+   
 # Ruta para renderizar el template para añadir nuevos elementos
 @app.route("/create")
 def create():
@@ -104,25 +103,64 @@ def delete_insumo(id):
     return redirect('/')
 
 
+#RUTAS SECTOR FINANZAS
 
-# Ruta de busqueda de elementos
-@app.route('/buscar', methods=['GET', 'POST'])
-def buscar():
-    mensaje = None
+
+#Ruta finanzas
+@app.route("/finanzas")
+def finanzas():
     
+    # Consulta SELECT para acceder a todos los datos de la db
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT * FROM finanzas")
+    finanzas_items = cur.fetchall()
+    print(finanzas_items)
+
+    return render_template('finanzas.html', fin = finanzas_items)
+
+
+# Ruta para renderizar el template para añadir nuevos elementos
+@app.route("/create_fin")
+def create_fin():
+    return render_template("create_fin.html")
+
+# Ruta para añadir elementos
+@app.route('/add_insumo_fin', methods=['POST'])
+def add_insumo_fin():
     if request.method == 'POST':
-        nombre = request.form['nombre'] # deberia poner cada uno?? no sobreescribe lo que ya habia hecho respecto a la forma de busqueda? 
-                                        #FALTA EL HTML
+        numero_de_registro = request.form['numero_de_registro']
+        clasificacion = request.form['clasificacion']
+        detalle_del_bien = request.form['detalle_del_bien']
+        edificio = request.form['edificio']
+        area_responsable = request.form['area_responsable']
+        estado = request.form['estado']
+        valor_unitario = request.form['valor_unitario']
+                
         cur = mysql.connection.cursor()
-        cur.execute("SELECT * FROM inventario WHERE insumos = %", (nombre,))
-        inventario_item = cur.fetchone()
+        cur.execute('INSERT INTO finanzas (numero_de_registro, clasificacion, detalle_del_bien, edificio, area_responsable, estado, valor_unitario) VALUES (%s, %s, %s, %s, %s, %s, %s)', 
+                    (numero_de_registro, clasificacion, detalle_del_bien, edificio, area_responsable, estado, valor_unitario))
+        mysql.connection.commit()
+        flash('Registro ingresado')
+        return redirect('/finanzas')
 
-        if inventario_item:
-            return redirect(url_for('mostrar_detalle', id=inventario_item[0]))
-        else:
-            mensaje = "Vacío: El valor no existe en la base de datos."
 
-    return redirect('/', mensaje=mensaje)
+
+
+# # Ruta de busqueda de elementos
+# @app.route('/buscar', methods=['GET', 'POST'])
+# def index():
+#     results = []
+
+#     if request.method == 'POST':
+#         query = request.form['query']
+#         # Llama a tu función para buscar en la base de datos
+#         results = buscar_en_bd(query)
+        
+#         if not results:
+#             results = ["Vacío: El valor no existe en la base de datos."]
+
+#     return render_template('index.html', results=results)
+ 
 
 if __name__ == '__main__':
     app.run(debug=True, port=8000)

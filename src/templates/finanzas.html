@@ -1,0 +1,54 @@
+{% include 'header.html' %}
+
+<h1>
+    <!-- Contenedores Título, Botón para agregar elementos de la tabla finanzas-->
+    <div class="center-container-finanzas">
+    <div class="tittle-finanzas">
+        <h1>Sector Finanzas</h1>
+    </div>
+    <div class="add-registro-fin">
+        <a href="{{url_for('create_fin')}}" class="btn btn-success">Añadir Registro</a>
+    </div>
+</div>
+
+<!-- Contenedores para la tabla finanzas-->
+<div class="table-responsive">
+    <table class="table table-striped  table-sm table-bordered" id="table-finanzas">
+        <thead class="table-dark">
+            <tr>
+                <th>id</th>
+                <th>Número de Registro</th>
+                <th>Clasificación</th>
+                <th>Detalle del bien</th>
+                <th>Edificio</th>
+                <th>Area Responsable</th>
+                <th>Estado</th>
+                <th>Valor Unitario</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody id="tbody-finanzas">
+
+        
+            {% for item in fin %}
+            <tr>
+                <td>{{ item[0] }}</td>
+                <td>{{ item[1] }}</td>
+                <td>{{ item[2] }}</td>
+                <td>{{ item[3] }}</td>
+                <td>{{ item[4] }}</td>
+                <td>{{ item[5] }}</td>
+                <td>{{ item[6] }}</td>
+                <td>{{ item[7] }}</td>
+                <td style="display: flex; justify-content: space-between;">
+<!-- modificar las rutas creando las nuevas que sean redirigidas al area de finanzas-->
+                    <a href="/edit_insumo/{{item[0]}}" class="btn btn-primary btn-sm">Editar</a> | 
+                    <a href="/delete_insumo/{{item[0]}}" class="btn btn-danger" onclick="return ConfirmDelete()" >Eliminar</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+</div>
+{% include 'footer.html' %}
