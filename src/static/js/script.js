@@ -39,3 +39,38 @@ function performSearch() {
 }
 
 
+// Animación de flash messages
+setTimeout(function () {
+    var flashMessages = document.querySelector('.flash-messages');
+    if (flashMessages) {
+        flashMessages.classList.add('fade-out');
+        setTimeout(function () {
+            flashMessages.remove();
+        }, 500); 
+    }
+}, 2000); 
+
+
+// Confirmación delete
+function ConfirmDelete() {
+    var respuesta = confirm("Deseas eliminar este elemento?");
+    if (respuesta == true) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    const guardarButton = document.getElementById("guardar-button");
+
+    // Escucha el evento keydown en el botón de "Guardar"
+    guardarButton.addEventListener("keydown", function (event) {
+      // Verifica si la tecla presionada es "Enter" (código 13)
+      if (event.keyCode === 13) {
+        // Activa el evento de clic en el botón de "Guardar"
+        guardarButton.click();
+      }
+    });
+  });

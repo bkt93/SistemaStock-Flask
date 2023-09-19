@@ -53,18 +53,7 @@
         {% endfor %}
     </div>
 </div>
-<script>
-    // Función para aplicar la animación de desvanecimiento después de 2 segundos
-    setTimeout(function () {
-        var flashMessages = document.querySelector('.flash-messages');
-        if (flashMessages) {
-            flashMessages.classList.add('fade-out');
-            setTimeout(function () {
-                flashMessages.remove();
-            }, 500); // 500ms es la duración de la animación
-        }
-    }, 2000); // 2000ms (2 segundos) antes de aplicar la animación
-</script>
+
 {% endif %}
 {% endwith %}
 

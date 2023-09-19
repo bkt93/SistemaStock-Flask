@@ -1,40 +1,23 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_mysqldb import MySQL
 
+from config import config
+
 app = Flask(__name__)
 
-# Conexión a la base de datos MySQL
-
-app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_PORT'] = 3306
-app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = '129899'
-app.config['MYSQL_DB'] = 'inventarioflask'
-
 mysql= MySQL(app)
-
-#Configuraciones
-app.secret_key = 'mysecretkey'
 
 
 # Ruta principal
 @app.route('/')
 def Index():
 
-
-    # Consulta SELECT para acceder a todos los datos de la db
     cur = mysql.connection.cursor()
     cur.execute("SELECT * FROM inventario")
     inventario_items = cur.fetchall()
     print(inventario_items)
 
-    return render_template('index.html', inv = inventario_items)
-
-   
-# Ruta para renderizar el template para añadir nuevos elementos
-@app.route("/create")
-def create():
-    return render_template("create.html")
+    return render_template('sistemas/index.html', inv = inventario_items)
 
 # Ruta para añadir elementos
 @app.route('/add_insumo', methods=['POST'])
@@ -163,6 +146,7 @@ def add_insumo_fin():
  
 
 if __name__ == '__main__':
+    app.config.from_object(config['development'])
     app.run(debug=True, port=8000)
 
 
