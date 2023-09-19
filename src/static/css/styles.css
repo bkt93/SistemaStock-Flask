@@ -6,21 +6,9 @@
     margin-bottom: 10px;
 }
 
-.tittle-inv {
-    display: flex;
-    align-items: center;
+.container{
+    margin-top: 5%;
 }
-
-.add-insumo {
-    margin-left: -35%; 
-}
-
-.search-container {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-}
-
 
 .search-box {
     display: inline-block; 
@@ -35,6 +23,37 @@
     width: 150px;
     margin-right: 10px; 
 }
+
+
+.td-container tr td {
+    vertical-align: middle;
+}
+
+.td-container tr td.centered {
+    vertical-align: middle;
+}
+
+.flash-messages {
+    margin-top: 5px;
+    display: flex;
+    justify-content: left; /* Centra verticalmente el contenido */
+    animation: fadeOutUp 0.5s ease-in-out 2s forwards;
+    max-height: 50px; /* Ajusta la altura máxima según sea necesario */
+    overflow: hidden;
+}
+
+@keyframes fadeOutUp {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+}
+
+
 
 
 
