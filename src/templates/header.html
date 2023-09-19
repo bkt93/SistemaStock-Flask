@@ -46,14 +46,17 @@
 <!-- Alertas / Mensajes -->
 {% with messages = get_flashed_messages() %}
 {% if messages %}
-{% for message in messages%}
-    <p>{{message}}</p>
-{%endfor%}
-{%endif%}
-{%endwith%}
-<body>
+<div class="alert alert-success flash-messages" role="alert">
+    <div class="messages">
+        {% for message in messages %}
+            <p class="flash-message">{{ message }}</p>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+{% endwith %}
 
-    
+<body>
 
 <div class="container">
         
