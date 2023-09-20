@@ -13,8 +13,8 @@
             <div class="col-12">
                 <div class="add-insumo" style="margin-left: -40vh">
 
-                    <!-- Button trigger modal -->
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    <!-- Boton modal -->
+                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
                         Agregar insumo
                     </button>
                     
@@ -131,10 +131,12 @@
                     <td>{{ item[6] }}</td>
                     <td>{{ item[7] }}</td>
                     <td>{{ item[8] }}</td>
+                    <div class="boton-contenedor">
                     <td style="display: flex; justify-content: space-between;">
-                        <a href="/edit_insumo/{{item[0]}}" class="btn btn-primary btn-sm">Editar</a> | 
-                        <a href="/delete_insumo/{{item[0]}}" class="btn btn-danger btn-sm" onclick="return ConfirmDelete()" >Eliminar</a>
+                        <a href="/edit_insumo/{{item[0]}}" class="btn btn-primary btn-sm"><i class="bi bi-pencil-square"></i></a> | 
+                        <a href="/delete_insumo/{{item[0]}}" class="btn btn-danger btn-sm" onclick="return ConfirmDelete()" ><i class="bi bi-trash3"></i></i></a>
                     </td> 
+                    </div>
                 </tr>
                 {% endfor %}
             </tbody>

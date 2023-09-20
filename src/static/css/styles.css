@@ -53,7 +53,9 @@
     }
 }
 
-
-
-
-
+.btn i.bi {
+    display: block; /* Cambiamos a bloque para controlar la altura */
+    margin: 0 auto; /* Centramos horizontalmente */
+    padding: 2px;
+    font-size: 18px; /* Ajusta el tamaño del icono según sea necesario */
+}
