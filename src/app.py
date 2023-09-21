@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_mysqldb import MySQL
 
+
 from config import config
 
 app = Flask(__name__)
@@ -50,7 +51,7 @@ def edit_insumo(id):
    
     return render_template('edit.html', inv = inventario_items)
 
-
+# Ruta para editar elementos
 @app.route('/update/<id>', methods = ['POST'])
 def update(id):
     if request.method == 'POST':
@@ -143,6 +144,12 @@ def add_insumo_fin():
 #             results = ["Vacío: El valor no existe en la base de datos."]
 
 #     return render_template('index.html', results=results)
+
+
+
+
+
+
  
 
 if __name__ == '__main__':
