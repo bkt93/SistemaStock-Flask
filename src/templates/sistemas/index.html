@@ -1,108 +1,98 @@
 {% include 'header.html' %}
     
-    <!-- Contenedores Título, Botón para agregar elementos y barra de búsqueda -->
+    <!-- Título -->
     <div class="center-container">
-        <div class="row">
-            <div class="col-12">
-                <div class="tittle-inv">
-                    <h2>Sistema de inventario</h2>
+        <div class="tittle-inv">
+            <h2>Sistema de inventario</h2>
+        </div>        
+    </div>
+   
+    <!-- Agregar y búsqueda -->
+    <div class="agregar-search">
+        <div class="add-insumo">
+            <!-- Boton modal -->
+            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                Agregar insumo
+            </button>
+            <!-- Modal -->
+            <div class="modal fade" data-bs-backdrop="static" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Agregar nuevo insumo</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-12">
-                <div class="add-insumo" style="margin-left: -40vh">
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row mt-3">
+                            <div class="col">
+                                <form action="/add_insumo" method="POST" id="guardar-button">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <label for="insumos" class="form-label">Insumo</label>
+                                            <input type="text" name="insumos" class="form-control"  id="insumos">
+                                        </div>
 
-                    <!-- Boton modal -->
-                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                        Agregar insumo
-                    </button>
-                    
-                    <!-- Modal -->
-                    <div class="modal fade" data-bs-backdrop="static" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="exampleModalLabel">Agregar nuevo insumo</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="container">
-                                <div class="row mt-3">
-                                    <div class="col">
-                                        <form action="/add_insumo" method="POST" id="guardar-button">
-                                            <div class="row">
-                                                <div class="col-6">
-                                                    <label for="insumos" class="form-label">Insumo</label>
-                                                    <input type="text" name="insumos" class="form-control"  id="insumos">
-                                                </div>
-
-                                                <div class="col-6">
-                                                    <label for="registro" class="form-label">Registro</label>
-                                                    <input type="text" name="registro" class="form-control"  id="registro">
-                                                </div>
-                                            </div>
-                                            
-                                            <div class="row">
-                                                <div class="col-6">
-                                                    <label for="ubicacion" class="form-label">Ubicación</label>
-                                                    <input type="text" name="ubicacion" class="form-control"  id="ubicacion">
-                                                </div>
-
-                                                <div class="col-6">
-                                                    <label for="estado" class="form-label">Estado</label>
-                                                    <input type="text" name="estado" class="form-control"  id="estado">
-                                                </div>
-                                            </div>
-
-                                            <div class="row">
-                                                <div class="col-6">
-                                                    <label for="precio_unitario" class="form-label">Precio Unitario</label>
-                                                    <input type="text" name="precio_unitario" class="form-control" id="precio_unitario">
-                                                </div>
-
-                                                <div class="col-6">
-                                                    <label for="fecha_de_ingreso" class="form-label">Fecha de ingreso</label>
-                                                    <input type="text" name="fecha_de_ingreso" class="form-control" id="fecha_de_ingreso">
-                                                </div>
-                                            </div>
-
-                                            <label for="fecha_de_actualizacion" class="form-label">Fecha de actualización</label>
-                                            <input type="text" name="fecha_de_actualizacion" class="form-control" id="fecha_de_actualizacion">
-
-                                            <label for="observacion" class="form-label">Observación</label>
-                                            <textarea name="observacion" class="form-control" id="observacion"></textarea>
-                                        
+                                        <div class="col-6">
+                                            <label for="registro" class="form-label">Registro</label>
+                                            <input type="text" name="registro" class="form-control"  id="registro">
+                                        </div>
                                     </div>
-                                </div>
+                                    
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <label for="ubicacion" class="form-label">Ubicación</label>
+                                            <input type="text" name="ubicacion" class="form-control"  id="ubicacion">
+                                        </div>
+
+                                        <div class="col-6">
+                                            <label for="estado" class="form-label">Estado</label>
+                                            <input type="text" name="estado" class="form-control"  id="estado">
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <label for="precio_unitario" class="form-label">Precio Unitario</label>
+                                            <input type="text" name="precio_unitario" class="form-control" id="precio_unitario">
+                                        </div>
+
+                                        <div class="col-6">
+                                            <label for="fecha_de_ingreso" class="form-label">Fecha de ingreso</label>
+                                            <input type="text" name="fecha_de_ingreso" class="form-control" id="fecha_de_ingreso">
+                                        </div>
+                                    </div>
+
+                                    <label for="fecha_de_actualizacion" class="form-label">Fecha de actualización</label>
+                                    <input type="text" name="fecha_de_actualizacion" class="form-control" id="fecha_de_actualizacion">
+
+                                    <label for="observacion" class="form-label">Observación</label>
+                                    <textarea name="observacion" class="form-control" id="observacion"></textarea>
+                                
                             </div>
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                            <button type="submit" class="btn btn-primary" id="guardar-button">Guardar</button>
-                        </div>
-                        </form>
-                        </div>
                     </div>
-                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-primary" id="guardar-button">Guardar</button>
+                </div>
+                </form>
                 </div>
             </div>
+            </div>
         </div>
-        <div class="row">
-            <div class="col-12">
-                <div class="search-container">
-                    <div class="search-box">
-                        <input type="text" id="search-input" placeholder="Buscar" class="form-control">
-                        <i class="fas fa-search"></i>
-                    </div>
-                </div>
+
+        <div class="search-container">
+            <div class="search-box">
+                <input type="text" id="search-input" placeholder="Buscar" class="form-control">
+                <i class="fas fa-search"></i>
             </div>
         </div>
     </div>
-    
-    
-    <!-- Contenedores para la tabla -->
-   <div class="table-responsive">
+
+    <!-- Tabla -->
+    <div class="table-responsive">
         <table class="table align-middle" id="table-inventario">
             <thead>
                 <tr>
@@ -143,6 +133,12 @@
         </div>
         </table>
     </div>
+
+    <!-- Excel -->
+    <div class="excel-container">
+        <a href="{{ url_for('download_report') }}">Descargar tabla</a>
+    </div>
+    
 </div>
 
 

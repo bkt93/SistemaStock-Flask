@@ -1,10 +1,16 @@
 .center-container {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    justify-content: flex-start; /* Colocar al principio y al final, con espacio en el medio */
+    align-items: center; /* Centrar verticalmente */
+  }
+
+.agregar-search {
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin-bottom: 10px;
 }
+
 
 .container{
     margin-top: 5%;
@@ -54,8 +60,8 @@
 }
 
 .btn i.bi {
-    display: block; /* Cambiamos a bloque para controlar la altura */
-    margin: 0 auto; /* Centramos horizontalmente */
+    display: block; 
+    margin: 0 auto; 
     padding: 2px;
-    font-size: 18px; /* Ajusta el tamaño del icono según sea necesario */
+    font-size: 18px; 
 }
