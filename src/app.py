@@ -87,30 +87,85 @@ def delete_insumo(id):
     return redirect('/')
 
 
+#RUTAS DE IP-BOX
+
+# Ruta ppal ip-box
+@app.route('/ip_box')
+def ip_box():
+    # Consulta para acceder a los datos de la DB ip_box
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT * FROM ip_box")
+    ip_box_items = cur.fetchall()
+    print(ip_box_items)
+
+    return render_template('ipbox/ip_box.html', ip_box = ip_box_items)
+
+# Ruta para añadir elementos
+
+@app.route("/create_ip")
+def create_ip():
+    return render_template("ipbox/create_ip.html")
+
+
+@app.route('/add_ip', methods=['POST'])
+def add_ip():
+    if request.method == 'POST':
+        ip = request.form['ip']
+        inventario = request.form['inventario']
+        hostname = request.form['hostname']
+        extension = request.form['extension']
+        contrasena = request.form['contrasena']
+        box = request.form['box']
+        sector = request.form['sector']
+        fecha_de_actualizacion = request.form['fecha_de_actualizacion']
+        observacion = request.form['observacion']
+    
+        cur = mysql.connection.cursor()
+        cur.execute('INSERT INTO ip_box (ip, inventario, hostname, extension, contrasena, box, sector, fecha_de_actualizacion, observacion) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)', (ip, inventario, hostname, extension, contrasena, box, sector, fecha_de_actualizacion, observacion))
+        mysql.connection.commit()
+        flash('IP ingresado')
+        return redirect('/ip_box')
+    
+
+
+
+    
+# Ruta para editar elementos
+
+
+
+
+
+
+
+
+
+
+
 #RUTAS SECTOR FINANZAS
 
 
-#Ruta finanzas
-@app.route("/finanzas")
-def finanzas():
+# #Ruta finanzas
+# @app.route("/finanzas")
+# def finanzas():
     
-    # Consulta SELECT para acceder a todos los datos de la db
-    cur = mysql.connection.cursor()
-    cur.execute("SELECT * FROM finanzas")
-    finanzas_items = cur.fetchall()
-    print(finanzas_items)
+#     # Consulta SELECT para acceder a todos los datos de la db
+#     cur = mysql.connection.cursor()
+#     cur.execute("SELECT * FROM finanzas")
+#     finanzas_items = cur.fetchall()
+#     print(finanzas_items)
 
-    return render_template('finanzas.html', fin = finanzas_items)
+#     return render_template('finanzas.html', fin = finanzas_items)
 
 
-# Ruta para renderizar el template para añadir nuevos elementos
-@app.route("/create_fin")
-def create_fin():
-    return render_template("create_fin.html")
+# # Ruta para renderizar el template para añadir nuevos elementos
+# @app.route("/create_fin")
+# def create_fin():
+#     return render_template("create_fin.html")
 
-# Ruta para añadir elementos
-@app.route('/add_insumo_fin', methods=['POST'])
-def add_insumo_fin():
+# # Ruta para añadir elementos
+# @app.route('/add_insumo_fin', methods=['POST'])
+# def add_insumo_fin():
     if request.method == 'POST':
         numero_de_registro = request.form['numero_de_registro']
         clasificacion = request.form['clasificacion']
