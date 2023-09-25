@@ -1,5 +1,7 @@
-from flask import Flask, render_template, request, redirect, url_for, flash
+import pandas as pd
+from flask import Flask, render_template, request, redirect, url_for, flash, send_file
 from flask_mysqldb import MySQL
+
 
 
 from config import config
@@ -199,13 +201,6 @@ def add_ip():
 #             results = ["Vacío: El valor no existe en la base de datos."]
 
 #     return render_template('index.html', results=results)
-
-
-
-
-
-
- 
 
 if __name__ == '__main__':
     app.config.from_object(config['development'])
