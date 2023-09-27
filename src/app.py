@@ -1,4 +1,5 @@
 import pandas as pd
+import openpyxl
 from flask import Flask, render_template, request, redirect, url_for, flash, send_file
 from flask_mysqldb import MySQL
 
@@ -126,18 +127,44 @@ def add_ip():
         cur.execute('INSERT INTO ip_box (ip, inventario, hostname, extension, contrasena, box, sector, fecha_de_actualizacion, observacion) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)', (ip, inventario, hostname, extension, contrasena, box, sector, fecha_de_actualizacion, observacion))
         mysql.connection.commit()
         flash('IP ingresado')
-        return redirect('/ip_box')
+        return redirect('ipbox/ip_box.html')
     
-
-
-
-    
+  
 # Ruta para editar elementos
+@app.route('/editar_ip/<int:ip>', methods = ['POST'])
+def editar_ip(ip):
+    cur = mysql.connection.cursor()
+    cur.execute('SELECT * FROM ip_box WHERE id = %s', (ip,))
+    ip_box_items = cur.fetchall()
+    mysql.connection.commit()    
+   
+    return render_template('ipbox/edit_ip.html', inv_ip = ip_box_items)
 
-
-
-
-
+# Ruta para editar elementos
+@app.route('/update_ip/<ip>', methods = ['POST'])
+def update_ip(ip):
+    if request.method == 'POST':
+        ip = request.form['ip']
+        inventario = request.form['inventario']
+        hostname = request.form['hostname']
+        extension = request.form['extension']
+        contrasena = request.form['contrasena']
+        box = request.form['box']
+        sector = request.form['sector']
+        fecha_de_actualizacion = request.form['fecha_de_actualizacion']
+        observacion = request.form['observacion']
+        
+        cur = mysql.connection.cursor()
+        cur.execute("""
+                    UPDATE ip_box
+                    SET ip = %s, inventario = %s, hostname  = %s, extension = %s, 
+                        contraseña = %s, box = %s, sector = %s,
+                        fecha_de_actualizacion = %s, observacion = %s WHERE id = %s
+                    """, (ip, inventario, hostname, extension, contrasena, box,
+                        sector, fecha_de_actualizacion, observacion))
+        mysql.connection.commit()
+        flash('Hecho!')
+        return redirect('ipbox/ip_box.html')
 
 
 
@@ -164,6 +191,7 @@ def add_ip():
 # @app.route("/create_fin")
 # def create_fin():
 #     return render_template("create_fin.html")
+
 
 # # Ruta para añadir elementos
 # @app.route('/add_insumo_fin', methods=['POST'])
@@ -201,6 +229,30 @@ def add_ip():
 #             results = ["Vacío: El valor no existe en la base de datos."]
 
 #     return render_template('index.html', results=results)
+
+
+#crea una funcion para descargar la base de datos a Excel
+@app.route('/obtener_excel', methods=['GET'])
+def obtener_excel():
+    cur = mysql.connection.cursor()
+    cur.execute('SELECT * FROM inventario')
+    data = cur.fetchall()
+    cur.close()
+    
+    #Crear DataFrame
+    df = pd.DataFrame(data, columns = ["id", "insumos", "registro", "ubicacion", "estado", "precio_unitario", "fecha_de_ingreso", "fecha_de_actualizacion", "observacion"])
+    
+    #Se guarda el data_frame en un Excel
+    excel_filename = "inventario.xlsx"
+    df.to_excel(excel_filename, index=False)
+
+    #return 'Archivo descargado'
+    return send_file(f'../{excel_filename}', as_attachment=True)
+
+
+@app.route('/descargar')
+def descargar():
+    return obtener_excel()
 
 if __name__ == '__main__':
     app.config.from_object(config['development'])
