@@ -1,13 +1,14 @@
 from .entities.User import User
 
+
 class ModelUser():
 
     @classmethod
     def login(self, mysql, user):
         try:
             cursor = mysql.connection.cursor()
-            sql=""" SELECT id, username, password, fullname FROM user
-                WHERE username = '{}'""".format(user.username)
+            sql = """SELECT id, username, password, fullname FROM user 
+                    WHERE username = '{}'""".format(user.username)
             cursor.execute(sql)
             row = cursor.fetchone()
             if row != None:
@@ -17,4 +18,17 @@ class ModelUser():
                 return None
         except Exception as ex:
             raise Exception(ex)
-            
+
+    @classmethod
+    def get_by_id(self, mysql, id):
+        try:
+            cursor = mysql.connection.cursor()
+            sql = "SELECT id, username, fullname FROM user WHERE id = {}".format(id)
+            cursor.execute(sql)
+            row = cursor.fetchone()
+            if row != None:
+                return User(row[0], row[1], None, row[2])
+            else:
+                return None
+        except Exception as ex:
+            raise Exception(ex)
