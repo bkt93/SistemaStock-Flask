@@ -134,14 +134,23 @@
         </table>
     </div>
 
-    <!-- Excel -->
-    <div class="excel-container">
-        <a href="{{ url_for('download_report') }}">Descargar tabla</a>
-    </div>
-    
 </div>
 
+        <!-- Descargar los datos de la DB en un archivo Excel-->>
+    <html>
+        <head>
+            <title>Descargar Datos</title>
+        </head>
+        <body>
+            <h1>Descargar Datos</h1>
+            <form action="/descargar">
+                <button type="submit">Descargar Datos</button>
+            </form>
+        </body>
+        </html>
 
+
+ 
 {% include 'footer.html' %}
 
 
