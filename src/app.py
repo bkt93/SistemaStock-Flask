@@ -66,6 +66,7 @@ def home():
 
 
 @app.route('/protected')
+#Decorador para proteger las rutas
 @login_required
 def protected():
     return "<h1>Esta es una vista protegida, solo para usuarios autenticados.</h1>"
@@ -98,6 +99,7 @@ def status_404(error):
 
 # Ruta principal
 @app.route('/sistemas')
+@login_required
 def sistemas():
 
     cur = mysql.connection.cursor()
