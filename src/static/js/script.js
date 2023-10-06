@@ -61,7 +61,7 @@ function ConfirmDelete() {
     }
 }
 
-
+//Tecla enter para cargar formulario
 document.addEventListener("DOMContentLoaded", function () {
     const guardarButton = document.getElementById("guardar-button");
 
@@ -75,5 +75,5 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-  
+
  
