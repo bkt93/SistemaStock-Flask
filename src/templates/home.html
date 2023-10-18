@@ -3,27 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/SistemaStock-Flask/src/static/css/home.css">
+    <link rel="stylesheet" href="/src/static/css/home.css">
     <title>Document</title>
 </head>
 <body>
     
-    
+    <div class="menu">
+        <ion-icon name="menu-outline"></ion-icon>
+        <ion-icon name="close-outline"></ion-icon>
+    </div>
+    <!-- Desplegable -->
     <div class="barra-lateral">
-        <div class="nombre-pagina">
-            <ion-icon id="cloud" name="cube-outline"></ion-icon>
-            <span>Sistemas</span>
+        <div>
+            <div class="nombre-pagina">
+                <ion-icon id="cloud" name="cube-outline"></ion-icon>
+                <span>Sistemas</span>
+            </div>
+            <button class="boton">
+                <ion-icon name="add-outline"></ion-icon>
+                <span>Create new</span>
+            </button>
         </div>
-        <button class="boton">
-            <ion-icon name="add-outline"></ion-icon>
-            <span>Añadir</span>
-        </button>
 
         <!-- Barra de navegación -->
         <nav class="navegacion">
             <ul>
                 <li>
-                    <a href="#">
+                    <a id="inventario" href="#">
                         <ion-icon name="layers-outline"></ion-icon>
                         <span>Inventario</span>
                     </a>
@@ -67,26 +73,32 @@
             </ul>
         </nav>
 
-        <div class="linea"></div>
+        <div>
+            <div class="linea"></div>
 
-        <div class="modo-oscuro">
-            <div class="info">
-                <ion-icon name="moon-outline"></ion-icon>
-                <span>Theme</span>
-            </div>
-            <div class="switch">
-                <div class="base">
-                    <div class="circulo">
+            <div class="modo-oscuro">
+                <div class="info">
+                    <ion-icon name="moon-outline"></ion-icon>
+                    <span>Theme</span>
+                </div>
+                <div class="switch">
+                    <div class="base">
+                        <div class="circulo">
 
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
+    <main>
+        
+    </main>
+
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-    <script src="/SistemaStock-Flask/src/static/js/desplegable.js"></script>
+    <script src="/src/static/js/desplegable.js"></script>
 </body>
 </html>
 
