@@ -1,52 +1,327 @@
+:root{
+    --box-shadow:(0 0 10px rgba(200, 200, 200, 0.8);)
+}
+
+body {
+    /*font-family: 'Poppins', sans-serif;*/
+    font-family: 'Helvetica', sans-serif;
+    background-color: rgb(250, 250, 250);
+}
+
+
+
 .center-container {
     display: flex;
-    justify-content: flex-start; /* Colocar al principio y al final, con espacio en el medio */
-    align-items: center; /* Centrar verticalmente */
-  }
+    justify-content: flex-start; 
+    align-items: center; 
+
+}
 
 .agregar-search {
+height: 50px;
 display: flex;
 justify-content: space-between;
 align-items: center;
-margin-bottom: 10px;
+margin-bottom: 15px;
+vertical-align: middle;
+background-color: rgb(255, 255, 255);
+/*border-radius: 10px;*/
+padding: 0px 10px;
+/*border: 1px solid rgba(200, 200, 200, 0.6);*/
+box-shadow: 0 10px 10px -10px rgba(0,0,0, .25);
+/*padding: 0px 5px;*/
+/*background-color: white;*/
+
 }
 
+.agregar-search .containerIzquierda{
+    display: flex;
+    align-items: center;
+}
+
+
+.modal-body .form-control {
+    margin-bottom: 20px; /* Agrega margen inferior para espaciar los elementos verticalmente */
+}
+
+.modal-body label {
+    font-weight: bold;
+}
+
+
+
+/* CONTENEDORES DEL TÍTULO */
+
+.contenedor-titulo{
+    display: flex;
+    align-items: center;
+    vertical-align: middle;
+    margin-top: -30px;
+}
+
+.tittle-inv h2 {
+    font-size: 2.5em;
+    cursor: pointer;
+    margin-top: 10px;
+    margin-right: 10px;
+    position: relative;
+    overflow: hidden; /* Importante para ocultar el subrayado inicialmente */
+    margin-bottom: 30px;
+  }
+  
+  .tittle-inv p {
+    margin-top: -5px;
+    margin-bottom: 40px;
+    font-weight: bold;
+  }
+
+  .tittle-inv h2::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0; /* Inicialmente ancho 0 para ocultar el subrayado */
+    height: 2px;
+    background-color: black;
+    transition: width 0.3s ease; /* Animación de transición para el ancho */
+  }
+  
+  .tittle-inv h2:hover::after {
+    width: 100%; /* Ajusta el ancho al 100% al pasar el ratón por encima */
+  }
+  
+
+.filtro-container{
+    margin-left: 10px;
+}
+
+.filtro-container label{
+    font-weight: bold;
+}
+
+
+
+#length-menu-container{
+    vertical-align: middle;
+    margin-top: 1px;
+    font-weight: bold;
+}
 
 .container{
     margin-top: 5%;
 }
 
+.search-container{
+    display: flex;
+    padding: 2px;
+    align-items: center;
+    text-align: center;
+}
 .search-box {
     display: inline-block; 
     border: 1px solid #ccc;
     border-radius: 20px; 
     padding: 5px 10px;
+    width: 200px;
+    height: 35px;
+    background-color: white;
+    text-align: center;
+    align-items: center;
+    /*background-color: #4fbce4,*/
+}
+
+.search-box input{
+    vertical-align: middle; /* Puedes usar 'top', 'middle', 'bottom', u otros valores */
+}
+
+.form-control{
+    height: 35px;
 }
 
 #search-input {
     border: none; 
-    outline: none; 
-    width: 150px;
-    margin-right: 10px; 
+    outline: none;
+    width: 100%; 
 }
 
+/*.contenedor-tabla{
+    background-color: rgb(255, 255, 255);
+    border-radius: 10px;
+    padding: 1em;
+}*/
+
+.table-container {
+    opacity: 0; /* Configuramos la opacidad inicial a 0 para ocultar la tabla */
+    transition: opacity 0.4s ease; /* Agregamos una transición suave a la propiedad de opacidad */
+    background-color: white;
+    padding: 10px;
+    /*border-radius: 10px;*/
+    /*border: 1px solid rgba(200, 200, 200, 0.6);*/
+    box-shadow: 0 10px 10px -10px rgba(0,0,0, .25);
+}
+  
+  /* Cuando se cargue la página y la tabla-container esté visible, la opacidad cambiará a 1 y se mostrará suavemente */
+.table-container.show {
+opacity: 1;
+
+}
+.dataTables_length{
+    margin-left: 10px;
+    padding: 2px;
+}
+
+.data-table th {
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis; /* Agrega puntos suspensivos (...) si el contenido es demasiado largo */ /* Establece un ancho fijo para los encabezados (ajusta según tus necesidades) */
+    font-size: 1em;
+}
+
+.data-table tr {
+    white-space: nowrap; 
+    overflow: hidden;
+    
+}
 
 .td-container tr td {
     vertical-align: middle;
+    white-space: nowrap; 
+    overflow: hidden;
+    font-size: 0.5em;
 }
 
 .td-container tr td.centered {
     vertical-align: middle;
 }
 
-.flash-messages {
-    margin-top: 5px;
-    display: flex;
-    justify-content: left; /* Centra verticalmente el contenido */
-    animation: fadeOutUp 0.5s ease-in-out 2s forwards;
-    max-height: 50px; /* Ajusta la altura máxima según sea necesario */
-    overflow: hidden;
+
+.table-responsive table th {
+    text-align: left;
 }
+
+
+.custom-icon ion-icon {
+    font-size: 1.2em;
+    vertical-align: middle;
+}
+
+/* Contenedor búsqueda + descarga */
+.agregar-search .containerDerecha{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}  
+
+.containerDerecha .importar{
+    margin-right: 10px; 
+}
+
+.importar ion-icon{
+    vertical-align: middle;
+    font-size: 15px;
+    font-weight: bold;
+    margin-bottom: 2px;
+    margin-left: 5px
+}
+
+.agregar-search .containerDerecha .search-container{
+    margin-left: 10px;
+}
+
+
+thead th {
+    text-align: center;
+    font-size: 11px;
+}
+
+.add-insumo button {
+    font-size: 1em;
+    
+}
+.add-insumo ion-icon{
+    vertical-align: middle;
+    font-size: 15px;
+    font-weight: bold;
+    margin-bottom: 2px;
+}
+
+.containerDerecha .descargas ion-icon{
+    vertical-align: middle;
+    font-size: 15px;
+    font-weight: bold;
+    margin-bottom: 2px;
+}
+
+
+
+/* Estilos personalizados para el footer del DataTable */
+.custom-footer {
+    font-size: 13px;
+    color: #333;
+}
+
+
+
+/* Estilos para los botones de paginación */
+.custom-pagination-button {
+    background-color: #cecece;
+    color: #fff;
+    border: 1px solid #b4b5b6;
+    padding: 5px 10px;
+    margin: 5px;
+    border-radius: 5px;
+}
+
+/* Estilos para el texto de información */
+.custom-info-text {
+    font-weight: bold;
+    color: black;
+}
+
+.flash-container{
+    display: flex;
+    justify-content: flex-end;
+}
+
+.flash-message-auto-close {
+    transition: opacity 0.5s ease-in-out;
+}
+
+.flash-message-auto-close.hide {
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+
+/**************/
+/*EDITAR------*/
+/**************/
+
+.contenedor-padre-edit {
+    width: 100%;
+    margin-top: 10%;
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Centra horizontalmente */  
+}
+
+.contenedor-edit {
+    width: 40%;
+    margin: 0 auto; 
+    background-color: white;
+    border-radius: 5px;
+    border: 1px solid rgba(200, 200, 200, 0.6);
+    padding: 10px;
+}
+
+.botones-edit {
+    display: flex;
+    justify-content: flex-end;
+}
+
+
+ 
+
 
 @keyframes fadeOutUp {
     from {

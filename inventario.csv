@@ -1,0 +1,10 @@
+id,insumos,registro,ubicacion,estado,precio_unitario,fecha_de_ingreso,fecha_de_actualizacion,observacion
+90,Auricular,GS-AUR-00025,San Lorenzo 50,En uso,None,2023-02-02,2023-11-06,Mantenimiento y formateo
+91,PC,GS-200,San ,En uso,None,2022-02-05,2023-10-10,Mantenimiento completo
+92,Auricular,GS-AUR-00001,Portabilidad,En uso,$3350,2023-02-01,2023-11-03,Soldado de cableado
+93,Monitor,GS-MNT-00001,Portabilidad,En uso,$25000,2023-04-03,,-
+94,Teclado,GS-TCL-00001,Portabilidad,En uso,$1500,2023-02-01,2023-09-04,Limpieza
+95,Mouse,GS-MS-00001,San,En uso,$600,2023-02-02,2023-08-06,Scroll reparado
+96,Notebook,GS-2,Las Heras 136,En uso,$200000,2023-02-01,2023-11-01,Formateo
+97,Notebook,GS-3,San Lorenzo 50,En uso,$200000,2023-02-01,2023-08-06,Formateo y mantemiento
+103,PC,GS-356,San Lorenzo 50,,,,,

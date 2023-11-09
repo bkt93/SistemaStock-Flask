@@ -68,3 +68,23 @@ $(function() {
 		form.addClass('was-validated');
 	});
 });
+
+
+// Alertas!
+// Cerrar la alerta al hacer clic en la "x"
+document.querySelector('.btn-close').addEventListener('click', function () {
+	document.querySelector('.alert').style.transition = 'opacity 0.5s'; // Agrega una transición
+	document.querySelector('.alert').style.opacity = '0'; // Hace que la alerta se desvanezca
+	setTimeout(function() {
+		document.querySelector('.alert').remove(); // Elimina la alerta después de la transición
+	}, 500); // 500 milisegundos = 0.5 segundos
+});
+
+// Cerrar automáticamente después de 3 segundos
+setTimeout(function() {
+	document.querySelector('.alert').style.transition = 'opacity 0.5s'; // Agrega una transición
+	document.querySelector('.alert').style.opacity = '0'; // Hace que la alerta se desvanezca
+	setTimeout(function() {
+		document.querySelector('.alert').remove(); // Elimina la alerta después de la transición
+	}, 500); // 500 milisegundos = 0.5 segundos
+}, 3000); // 3000 milisegundos = 3 segundos

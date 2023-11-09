@@ -27,7 +27,7 @@ menu.addEventListener("click",()=>{
 
 palanca.addEventListener("click",()=>{
     let body = document.body;
-    body.classList.toggle("dark-mode");
+    body.classList.toggle("light-mode");
     circulo.classList.toggle("prendido");
 });
 
@@ -38,3 +38,15 @@ cloud.addEventListener("click",()=>{
         span.classList.toggle("oculto");
     });
 });
+
+// Cierre de sesión
+document.addEventListener("DOMContentLoaded", function() {
+    const logoutLink = document.getElementById("logout-link");
+  
+    logoutLink.addEventListener("click", function(event) {
+      if (!confirm("¿Estás seguro de que deseas cerrar sesión?")) {
+        event.preventDefault(); // Cancela la navegación si el usuario no está seguro
+      }
+    });
+  });
+

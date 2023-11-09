@@ -1,157 +1,290 @@
-{% include 'header.html' %}
-    
-    <!-- Título -->
-    <div class="center-container">
+{%extends "home.html"%}
+
+{% block content%}
+
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+<link rel="stylesheet" href="/static/css/styles.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+
+
+
+
+<div class="contenedor-padre">
+     <!-- Título -->
+    <div class="contenedor-titulo">
         <div class="tittle-inv">
-            <h2>Sistema de inventario</h2>
-        </div>        
+            <h2>Inventario</h2>
+        </div>
+        <div class="flash-message">
+            {% for message in get_flashed_messages() %}
+                {% if 'ingresado' in message %}
+                    <div class="alert alert-success alert-dismissible flash-message-auto-close fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% elif 'eliminado' in message %}
+                    <div class="alert alert-danger alert-dismissible flash-message-auto-close fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% elif 'existe' in message %}
+                    <div class="alert alert-danger alert-dismissible flash-message-auto-close fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% else %}
+                    <div class="alert alert-success alert-dismissible flash-message-auto-close fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+        
     </div>
-   
-    <!-- Agregar y búsqueda -->
+    
+
+    <!-- Agregar, búsqueda y descarga-->
     <div class="agregar-search">
-        <div class="add-insumo">
-            <!-- Boton modal -->
-            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                Agregar insumo
-            </button>
-            <!-- Modal -->
-            <div class="modal fade" data-bs-backdrop="static" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Agregar nuevo insumo</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="container">
-                        <div class="row mt-3">
-                            <div class="col">
-                                <form action="/add_insumo" method="POST" id="guardar-button">
-                                    <div class="row">
-                                        <div class="col-6">
-                                            <label for="insumos" class="form-label">Insumo</label>
-                                            <input type="text" name="insumos" class="form-control"  id="insumos">
-                                        </div>
-
-                                        <div class="col-6">
-                                            <label for="registro" class="form-label">Registro</label>
-                                            <input type="text" name="registro" class="form-control"  id="registro">
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="row">
-                                        <div class="col-6">
-                                            <label for="ubicacion" class="form-label">Ubicación</label>
-                                            <input type="text" name="ubicacion" class="form-control"  id="ubicacion">
-                                        </div>
-
-                                        <div class="col-6">
-                                            <label for="estado" class="form-label">Estado</label>
-                                            <input type="text" name="estado" class="form-control"  id="estado">
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-6">
-                                            <label for="precio_unitario" class="form-label">Precio Unitario</label>
-                                            <input type="text" name="precio_unitario" class="form-control" id="precio_unitario">
-                                        </div>
-
-                                        <div class="col-6">
-                                            <label for="fecha_de_ingreso" class="form-label">Fecha de ingreso</label>
-                                            <input type="text" name="fecha_de_ingreso" class="form-control" id="fecha_de_ingreso">
-                                        </div>
-                                    </div>
-
-                                    <label for="fecha_de_actualizacion" class="form-label">Fecha de actualización</label>
-                                    <input type="text" name="fecha_de_actualizacion" class="form-control" id="fecha_de_actualizacion">
-
-                                    <label for="observacion" class="form-label">Observación</label>
-                                    <textarea name="observacion" class="form-control" id="observacion"></textarea>
+        <div class="containerIzquierda">
+             
+            <div class="add-insumo">
+                <!-- Boton modal -->
+                <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    Agregar insumo <ion-icon name="add-outline"></ion-icon>
+                </button>
+                <!-- Modal -->
+                <div class="modal fade" data-bs-backdrop="static" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Agregar nuevo insumo</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container">
+                            <div class="row mt-3">
+                                <div class="col">
+                                    <!-- Formulario para crear elementos -->
+                                    <form action="/add_insumo" method="POST" id="guardar-button">
+                                        <input type="hidden" name="csrf_token" value="{{ csrf_token ()}}">
+                                        <div class="row">
                                 
+                                            <div class="col-6">
+                                                <label for="insumos" class="form-label">Insumo</label>
+                                                <select name="insumos"  class="form-control" id="insumos">
+                                                    <option value="PC">PC</option>
+                                                    <option value="Notebook">Notebook</option>
+                                                    <option value="Auricular">Auricular</option>
+                                                    <option value="PC">Mouse</option>
+                                                    <option value="Teclado">Teclado</option>
+                                                    <option value="PC">Monitor</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="col-6">
+                                                <label for="registro" class="form-label">Registro</label>
+                                                <input type="text" name="registro" class="form-control"  id="registro" value="GS-">
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <label for="ubicacion" class="form-label">Ubicación</label>
+                                                <select name="ubicacion"  class="form-control" id="ubicacion">
+                                                    <option value="San Lorenzo 50">San Lorenzo 50</option>
+                                                    <option value="San Lorenzo 60">San Lorenzo 60</option>
+                                                    <option value="Corrientes">Corrientes</option>
+                                                    <option value="Las Heras 136">Las Heras 136</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="col-6">
+                                                <label for="estado" class="form-label">Estado</label>
+                                                <select name="estado" class="form-control"  id="estado">
+                                                    <option value="Disponible">Disponible</option>
+                                                    <option value="En uso">En uso</option>
+                                                    <option value="En reparación">En reparación</option>
+                                                    <option value="Baja">Baja</option>
+                                                    <option value="Extraviado">Extraviado</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <label for="precio_unitario" class="form-label">Precio Unitario</label>
+                                                <input type="text" name="precio_unitario" class="form-control" id="precio_unitario">
+                                            </div>
+
+                                            <div class="col-6">
+                                                <label for="fecha_de_ingreso" class="form-label">Fecha de ingreso</label>
+                                                <input type="date" name="fecha_de_ingreso" class="form-control" id="fecha_de_ingreso">
+                                            </div>
+                                        </div>
+
+                                        <label for="fecha_de_actualizacion" class="form-label">Fecha de actualización</label>
+                                        <input type="date" name="fecha_de_actualizacion" class="form-control" id="fecha_de_actualizacion">
+
+                                        <label for="observacion" class="form-label">Observación</label>
+                                        <input type="text" name="observacion" class="form-control" id="observacion">
+                                    
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="submit" class="btn btn-primary" id="guardar-button">Guardar</button>
-                </div>
-                </form>
-                </div>
-            </div>
-            </div>
-        </div>
-
-        <div class="search-container">
-            <div class="search-box">
-                <input type="text" id="search-input" placeholder="Buscar" class="form-control">
-                <i class="fas fa-search"></i>
-            </div>
-        </div>
-    </div>
-
-    <!-- Tabla -->
-    <div class="table-responsive">
-        <table class="table align-middle" id="table-inventario">
-            <thead>
-                <tr>
-                    <th>id</th>
-                    <th>Insumos</th>
-                    <th>Registro</th>
-                    <th>Ubicación</th>
-                    <th>Estado</th>
-                    <th>Precio Unitario</th>
-                    <th>Fecha de ingreso</th>
-                    <th>Fecha de actualización</th>
-                    <th>Observación</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-        <div class="td-container">
-            <tbody class="table-group-divider" id="tbody-inventario">
-                {% for item in inv %}
-                <tr>
-                    <td>{{ item[0] }}</td>
-                    <td>{{ item[1] }}</td>
-                    <td>{{ item[2] }}</td>
-                    <td>{{ item[3] }}</td>
-                    <td>{{ item[4] }}</td>
-                    <td>{{ item[5] }}</td>
-                    <td>{{ item[6] }}</td>
-                    <td>{{ item[7] }}</td>
-                    <td>{{ item[8] }}</td>
-                    <div class="boton-contenedor">
-                    <td style="display: flex; justify-content: space-between;">
-                        <a href="/edit_insumo/{{item[0]}}" class="btn btn-primary btn-sm"><i class="bi bi-pencil-square"></i></a> | 
-                        <a href="/delete_insumo/{{item[0]}}" class="btn btn-danger btn-sm" onclick="return ConfirmDelete()" ><i class="bi bi-trash3"></i></i></a>
-                    </td> 
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        <button type="submit" class="btn btn-primary" id="guardar-button">Guardar</button>
                     </div>
-                </tr>
-                {% endfor %}
-            </tbody>
+                    </form>
+                    </div>
+                </div>
+                </div>
+            </div>
+
+            <div id="length-menu-container">
+
+            </div>
         </div>
-        </table>
+
+        <!-- Descarga + búsqueda contenedor -->
+        <div class="containerDerecha">
+            <div class="importar">
+                <form action="#">
+                    <button type="submit" class="btn btn-outline-primary  btn-sm">Importar CSV<ion-icon name="cloud-upload-outline"></ion-icon></button>
+                </form>
+            </div>
+            <div class="descargas">
+                <div class="dropdown">
+                    <button class="btn btn-outline-success  btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      Descargas
+                    </button>
+                    <ul class="dropdown-menu">
+                      <li><a class="dropdown-item" href="/descargar">Descargar Excel</a></li>
+                      <li><a class="dropdown-item" href="/descargar_csv">Descargar CSV</a></li>
+                      <li><a class="dropdown-item" href="#">Descargar PDF</a></li>
+                    </ul>
+                  </div>
+                
+            </div>
+
+            <div class="search-container">
+                <div class="search-box">
+                    <input type="text" id="search-input" placeholder="Buscar">
+                    <i class="fas fa-search"></i>
+                </div>
+            </div>
+        </div>
     </div>
 
-</div>
+    
+    <!-- Tabla -->
+    <div class="contenedor-tabla">
+        <div class="table-container">
+            <div class="table-responsive">
+                <table class="table table-sm table-borderless data-table " id="table-inventario">
+                    <thead >
+                        <tr>
+                            <th>id</th>
+                            <th>Insumos</th>
+                            <th>Registro</th>
+                            <th>Ubicación</th>
+                            <th>Estado</th>
+                            <th>Precio Unitario</th>
+                            <th>Fecha de ingreso</th>
+                            <th>Fecha de actualización</th>
+                            <th>Observación</th>
+                            <th style="text-align: center;">Acciones</th>
+                        </tr>
+                    </thead>
+                
+                    <tbody class="table-group-divider" id="tbody-inventario">
+                        {% for item in inv %}
+                        <tr>
+                            <td>{{ item[0] }}</td>
+                            <td>{{ item[1] }}</td>
+                            <td>{{ item[2] }}</td>
+                            <td>{{ item[3] }}</td>
+                            <td style="text-align: center; font-weight: bold;">{{ item[4] }}</td>
+                            <td>{{ item[5] }}</td>
+                            <td>{{ item[6] }}</td>
+                            <td>{{ item[7] }}</td>
+                            <td>{{ item[8] }}</td>
+                            <div class="boton-contenedor">
+                                <td style="display: flex; justify-content: space-between;">
+                                    <a  href="/edit_insumo/{{item[0]}}" class="btn btn-primary btn-sm custom-icon"><ion-icon name="create-outline"></ion-icon></a>| 
+                                    <a href="/delete_insumo/{{item[0]}}" class="btn btn-danger btn-sm custom-icon" onclick="return ConfirmDelete()"><ion-icon name="trash-outline"></ion-icon></a>
+                                </td>
+                            </div>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>    
 
-        <!-- Descargar los datos de la DB en un archivo Excel-->>
-    <html>
-        <head>
-            <title>Descargar Datos</title>
-        </head>
-        <body>
-            <h1>Descargar Datos</h1>
-            <form action="/descargar">
-                <button type="submit">Descargar Datos</button>
-            </form>
-        </body>
-        </html>
 
+</main> 
+
+
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script src="/static/css/script.js"></script>
+
+
+
+
+
+<script>
+    $(document).ready(function () {
+        // Inicializa el DataTable en la tabla
+        var table = $('#table-inventario').DataTable({
+            "paging": true, // Habilita la paginación
+            "lengthMenu": [
+                [10, 25, 50, -1],
+                [10, 25, 50, 'All']
+            ],
+            "searching": false,
+            "language": {
+                "lengthMenu": "Mostrar _MENU_",
+                "info": " Mostrando _START_ al _END_ de _TOTAL_ registros",
+                "emptyTable": "No hay datos disponibles en la tabla",
+                "zeroRecords": "No hay ningún elemento que responda a la búsqueda.",
+                "dom": '<"custom-pagination"lfr>t<"custom-pagination"ip>',
+                "paginate": {
+                    "first": "Primero",
+                    "previous": "Anterior",
+                    "next": "Siguiente",
+                    "last": "Último"
+                }
+            }
+        });
+    // Mueve el menú de longitud al contenedor "length-menu-container"
+    $('#length-menu-container').append($('.dataTables_length'));
+
+    // Aplica estilos personalizados al menú de longitud
+    // Puedes agregar clases CSS o estilos en línea aquí
+    $('.dataTables_length').addClass('custom-footer');
+
+    // Aplica la clase CSS personalizada al texto de información
+    $('#table-inventario_info').addClass('custom-info-text');
+
+    // Aplica la clase CSS personalizada a los botones de paginación
+    $('#table-inventario_paginate .paginate_button').addClass('custom-pagination-button');
+
+    
+});
+</script>
+    
+{%endblock%}
 
  
-{% include 'footer.html' %}
+
 
 
 

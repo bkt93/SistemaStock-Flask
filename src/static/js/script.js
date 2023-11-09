@@ -76,4 +76,73 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
 
+  // Transición tabla
+  document.addEventListener("DOMContentLoaded", function() {
+    const tableContainer = document.querySelector('.table-container');
+    tableContainer.classList.add('show');
+  });
+
  
+// Mensajes flash tiempo
+document.addEventListener('DOMContentLoaded', function () {
+    let autoCloseElements = document.querySelectorAll('.flash-message-auto-close');
+    autoCloseElements.forEach(function (element) {
+        setTimeout(function () {
+            element.classList.add('hide');
+        }, 3500);
+    });
+});
+
+
+
+// Fondo de celda
+$('#table-inventario tbody tr').each(function () {
+    var estado = $(this).find('td:eq(4)').text().trim();
+    var estiloContenedor = {};
+
+    switch (estado) {
+        case 'Disponible':
+            estiloContenedor = {
+                backgroundColor: '#d5f8ef',
+                color: '#14b789',
+                borderRadius: '30px',
+                padding: '1px 5px' 
+            };
+            break;
+        case 'En uso':
+            estiloContenedor = {
+                backgroundColor: '#d8f6ff',
+                color: '#00aee5',
+                borderRadius: '30px',
+                padding: '1px 5px' 
+            };
+            break;
+        case 'En reparación':
+            estiloContenedor = {
+                backgroundColor: '#fdf3ce',
+                color: '#daab00',
+                borderRadius: '30px',
+                padding: '1px 5px'
+            };
+            break;
+        case 'Baja':
+            estiloContenedor = {
+                backgroundColor: '#Ffe5e5',
+                color: '#E50004',
+                borderRadius: '30px',
+                padding: '1px 5px' 
+            };
+            break;
+        default:
+            estiloContenedor = {
+                backgroundColor: 'white',
+                color: 'black',
+                borderRadius: '5px',
+                padding: '8px 10px' 
+            };
+    }
+
+    // Crear un contenedor interno y aplicar estilos al mismo
+    var contenedorInterno = $('<div>').css(estiloContenedor).text(estado);
+    $(this).find('td:eq(4)').empty().append(contenedorInterno);
+});
