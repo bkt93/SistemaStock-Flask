@@ -1,7 +1,7 @@
 # Librerías
 import pandas as pd
 import openpyxl
-from flask import Flask, render_template, request, redirect, url_for, flash, send_file
+from flask import Flask, render_template, request, redirect, url_for, flash, send_file, jsonify
 from flask_mysqldb import MySQL
 from flask_login import LoginManager, login_user, logout_user, login_required
 from flask_wtf.csrf import CSRFProtect
@@ -133,7 +133,7 @@ def edit_insumo(id):
     return render_template('/sistemas/editsistemas.html', inv = inventario_items) 
 
 # Ruta para editar elementos dela base de datos
-@app.route('/update/<id>', methods = ['POST']) 
+@app.route('/update/<id>', methods=['POST'])
 def update(id):
     if request.method == 'POST':
         insumos = request.form['insumos']
@@ -144,23 +144,29 @@ def update(id):
         fecha_de_ingreso = request.form['fecha_de_ingreso']
         fecha_de_actualizacion = request.form['fecha_de_actualizacion']
         observacion = request.form['observacion']
-        
-        cur = mysql.connection.cursor()
-        cur.execute("SELECT id FROM inventario WHERE registro = %s AND id != %s", (registro, id))
-        existing_record = cur.fetchone()
 
-        if existing_record:
-            flash('No puedes editar este elemento. Ya existe un registro con este valor.')
-        else:
-            cur.execute("""
-                        UPDATE inventario
-                        SET insumos = %s, registro = %s, ubicacion  = %s, estado = %s, 
-                            precio_unitario = %s, fecha_de_ingreso = %s, fecha_de_actualizacion = %s,
-                            observacion = %s WHERE id = %s
-                        """, (insumos, registro, ubicacion, estado, precio_unitario, fecha_de_ingreso,
-                            fecha_de_actualizacion, observacion, id))
+        cur = mysql.connection.cursor()
+
+        # Obtener el estado actual del elemento
+        cur.execute("SELECT estado FROM inventario WHERE id = %s", (id,))
+        existing_estado = cur.fetchone()
+
+        if existing_estado:
+            estado_anterior = existing_estado[0]
+            # Insertar el cambio en la tabla de historial_cambios
+            cur.execute('INSERT INTO historial_cambios (id_elemento, estado_anterior, estado_nuevo, registro) VALUES (%s, %s, %s, %s)', (id, estado_anterior, estado, registro))
             mysql.connection.commit()
-            flash(f'Elemento con id {id} editado correctamente')
+
+        # Actualizar el registro en la tabla de inventario con los nuevos datos del formulario
+        cur.execute("""
+            UPDATE inventario
+            SET insumos = %s, registro = %s, ubicacion = %s, estado = %s, 
+                precio_unitario = %s, fecha_de_ingreso = %s, fecha_de_actualizacion = %s,
+                observacion = %s WHERE id = %s
+            """, (insumos, registro, ubicacion, estado, precio_unitario, fecha_de_ingreso,
+                fecha_de_actualizacion, observacion, id))
+        mysql.connection.commit()
+        flash(f'Elemento con id {id} editado correctamente')
 
         return redirect('/sistemas')
 
@@ -173,6 +179,15 @@ def delete_insumo(id):
     mysql.connection.commit()       
     (flash(f'Elemento con id #{id} eliminado correctamente')) 
     return redirect('/sistemas')
+
+
+@app.route('/historial_cambios/<id_elemento>')
+def historial_cambios(id_elemento):
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT * FROM historial_cambios WHERE id_elemento = %s ORDER BY marca_tiempo DESC", (id_elemento,))
+    historial = cur.fetchall()
+
+    return jsonify(historial=historial)
 
 
 # Descarga Excel

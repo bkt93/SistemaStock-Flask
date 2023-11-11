@@ -203,6 +203,7 @@ opacity: 1;
 .custom-icon ion-icon {
     font-size: 1.2em;
     vertical-align: middle;
+    color: white;
 }
 
 /* Contenedor búsqueda + descarga */

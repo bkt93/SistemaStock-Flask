@@ -146,3 +146,47 @@ $('#table-inventario tbody tr').each(function () {
     var contenedorInterno = $('<div>').css(estiloContenedor).text(estado);
     $(this).find('td:eq(4)').empty().append(contenedorInterno);
 });
+
+
+// Historial de cambios
+$('#infoModal').on('show.bs.modal', function (event) {
+    const button = $(event.relatedTarget);
+    const id_elemento = button.data('historial');
+
+    fetch(`/historial_cambios/${id_elemento}`)
+        .then(response => response.json())
+        .then(data => {
+            let historialList = document.getElementById('historial-list');
+            historialList.innerHTML = '';
+
+            data.historial.forEach(cambio => {
+                let listItem = document.createElement('li');
+
+                let text = `<strong>${cambio[1]}</strong> ha cambiado su <strong>Estado</strong> de "${cambio[2]}" a "${cambio[3]}" a las "${cambio[4]}"`;
+                let styledText = text.replace(/(Disponible|En uso|En reparación|Baja)/g, match => {
+                    let style = '';
+                    switch (match) {
+                        case 'Disponible':
+                            style = 'background-color: #d5f8ef; color: #14b789; border-radius: 30px; padding: 1px 5px';
+                            break;
+                        case 'En uso':
+                            style = 'background-color: #d8f6ff; color: #00aee5; border-radius: 30px; padding: 1px 5px';
+                            break;
+                        case 'En reparación':
+                            style = 'background-color: #fdf3ce; color: #daab00; border-radius: 30px; padding: 1px 5px';
+                            break;
+                        case 'Baja':
+                            style = 'background-color: #ffe5e5; color: #e50004; border-radius: 30px; padding: 1px 5px';
+                            break;
+                        default:
+                            style = 'background-color: white; color: black; border-radius: 5px; padding: 8px 10px';
+                    }
+                    return `<span style="${style}">${match}</span>`;
+                });
+                listItem.innerHTML = styledText;
+                historialList.appendChild(listItem);
+            });
+        });
+});
+
+
