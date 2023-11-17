@@ -3,7 +3,7 @@ import pandas as pd
 import openpyxl
 from flask import Flask, render_template, request, redirect, url_for, flash, send_file, jsonify
 from flask_mysqldb import MySQL
-from flask_login import LoginManager, login_user, logout_user, login_required
+from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from flask_wtf.csrf import CSRFProtect
 #Obtener dataframe csv
 from io import StringIO
@@ -13,9 +13,14 @@ from config import config
 from models.ModelUser import ModelUser
 from models.entities.User import User
 
+from routes.hardware import hardware_bp
+
 
 
 app = Flask(__name__)
+
+# Inicialización de blueprint
+app.register_blueprint(hardware_bp, url_prefix='/hardware')
 
 # Login
 csrf = CSRFProtect()
@@ -105,7 +110,7 @@ def add_insumo():
         estado = request.form['estado']
         precio_unitario = request.form['precio_unitario']
         fecha_de_ingreso = request.form['fecha_de_ingreso']
-        fecha_de_actualizacion = request.form['fecha_de_actualizacion']
+        
         observacion = request.form['observacion']
         
         cur = mysql.connection.cursor()
@@ -115,7 +120,7 @@ def add_insumo():
         if existing_record:
             flash('No puedes añadir este elemento. Ya existe un registro con este valor.')
         else:
-            cur.execute('INSERT INTO inventario (insumos, registro, ubicacion, estado, precio_unitario, fecha_de_ingreso, fecha_de_actualizacion, observacion) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)', (insumos, registro, ubicacion, estado, precio_unitario, fecha_de_ingreso, fecha_de_actualizacion, observacion))
+            cur.execute('INSERT INTO inventario (insumos, registro, ubicacion, estado, precio_unitario, fecha_de_ingreso, observacion) VALUES (%s, %s, %s, %s, %s, %s, %s)', (insumos, registro, ubicacion, estado, precio_unitario, fecha_de_ingreso, observacion))
             mysql.connection.commit()
             flash('Insumo ingresado correctamente')
 
@@ -142,33 +147,34 @@ def update(id):
         estado = request.form['estado']
         precio_unitario = request.form['precio_unitario']
         fecha_de_ingreso = request.form['fecha_de_ingreso']
-        fecha_de_actualizacion = request.form['fecha_de_actualizacion']
         observacion = request.form['observacion']
 
         cur = mysql.connection.cursor()
 
-        # Obtener el estado actual del elemento
-        cur.execute("SELECT estado FROM inventario WHERE id = %s", (id,))
-        existing_estado = cur.fetchone()
+        cur.execute("SELECT estado, ubicacion FROM inventario WHERE id = %s", (id,))
+        existing_data = cur.fetchone()
 
-        if existing_estado:
-            estado_anterior = existing_estado[0]
-            # Insertar el cambio en la tabla de historial_cambios
-            cur.execute('INSERT INTO historial_cambios (id_elemento, estado_anterior, estado_nuevo, registro) VALUES (%s, %s, %s, %s)', (id, estado_anterior, estado, registro))
+        if existing_data:
+            estado_anterior = existing_data[0]
+            ubicacion_anterior = existing_data[1]
+            user_name = current_user.fullname
+
+            cur.execute('INSERT INTO historial_cambios (id_elemento, estado_anterior, estado_nuevo, ubicacion_anterior, ubicacion_nueva, registro, user_name) VALUES (%s, %s, %s, %s, %s, %s, %s)',
+                        (id, estado_anterior, estado, ubicacion_anterior, ubicacion, registro, user_name))
             mysql.connection.commit()
 
-        # Actualizar el registro en la tabla de inventario con los nuevos datos del formulario
         cur.execute("""
             UPDATE inventario
             SET insumos = %s, registro = %s, ubicacion = %s, estado = %s, 
-                precio_unitario = %s, fecha_de_ingreso = %s, fecha_de_actualizacion = %s,
+                precio_unitario = %s, fecha_de_ingreso = %s, 
                 observacion = %s WHERE id = %s
             """, (insumos, registro, ubicacion, estado, precio_unitario, fecha_de_ingreso,
-                fecha_de_actualizacion, observacion, id))
+                observacion, id))
         mysql.connection.commit()
         flash(f'Elemento con id {id} editado correctamente')
 
         return redirect('/sistemas')
+
 
 # Ruta para eliminar elementos
 @app.route('/delete_insumo/<int:id>')

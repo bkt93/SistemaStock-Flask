@@ -160,33 +160,40 @@ $('#infoModal').on('show.bs.modal', function (event) {
             historialList.innerHTML = '';
 
             data.historial.forEach(cambio => {
-                let listItem = document.createElement('li');
+                if (cambio[2] !== cambio[3]) {
+                    let estadoItem = document.createElement('li');
 
-                let text = `<strong>${cambio[1]}</strong> ha cambiado su <strong>Estado</strong> de "${cambio[2]}" a "${cambio[3]}" a las "${cambio[4]}"`;
-                let styledText = text.replace(/(Disponible|En uso|En reparación|Baja)/g, match => {
-                    let style = '';
-                    switch (match) {
-                        case 'Disponible':
-                            style = 'background-color: #d5f8ef; color: #14b789; border-radius: 30px; padding: 1px 5px';
-                            break;
-                        case 'En uso':
-                            style = 'background-color: #d8f6ff; color: #00aee5; border-radius: 30px; padding: 1px 5px';
-                            break;
-                        case 'En reparación':
-                            style = 'background-color: #fdf3ce; color: #daab00; border-radius: 30px; padding: 1px 5px';
-                            break;
-                        case 'Baja':
-                            style = 'background-color: #ffe5e5; color: #e50004; border-radius: 30px; padding: 1px 5px';
-                            break;
-                        default:
-                            style = 'background-color: white; color: black; border-radius: 5px; padding: 8px 10px';
-                    }
-                    return `<span style="${style}">${match}</span>`;
-                });
-                listItem.innerHTML = styledText;
-                historialList.appendChild(listItem);
+                    let estadoText = `<strong>${cambio[1]}</strong> ha cambiado su <strong>Estado</strong> de "${cambio[2]}" a "${cambio[3]}" a las "${cambio[4]}" por <strong>"${cambio[5]}"<strong>`;
+                    let styledEstadoText = estadoText.replace(/(Disponible|En uso|En reparación|Baja)/g, match => {
+                        let style = '';
+                        switch (match) {
+                            case 'Disponible':
+                                style = 'background-color: #d5f8ef; color: #14b789; border-radius: 30px; padding: 1px 5px';
+                                break;
+                            case 'En uso':
+                                style = 'background-color: #d8f6ff; color: #00aee5; border-radius: 30px; padding: 1px 5px';
+                                break;
+                            case 'En reparación':
+                                style = 'background-color: #fdf3ce; color: #daab00; border-radius: 30px; padding: 1px 5px';
+                                break;
+                            case 'Baja':
+                                style = 'background-color: #ffe5e5; color: #e50004; border-radius: 30px; padding: 1px 5px';
+                                break;
+                            default:
+                                style = 'background-color: white; color: black; border-radius: 5px; padding: 8px 10px';
+                        }
+                        return `<span style="${style}">${match}</span>`;
+                    });
+
+                    estadoItem.innerHTML = styledEstadoText;
+                    historialList.appendChild(estadoItem);
+                }
+
+                if (cambio[6] !== cambio[7]) {
+                    let ubicacionItem = document.createElement('li');
+                    ubicacionItem.innerHTML = `<strong>${cambio[1]}</strong> ha cambiado su <strong>Ubicación</strong> de <strong>"${cambio[6]}"</strong> a <strong>"${cambio[7]}"</strong> a las "${cambio[4]}" por <strong>"${cambio[5]}"</strong>`;
+                    historialList.appendChild(ubicacionItem);
+                }
             });
         });
 });
-
-
